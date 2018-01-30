@@ -1,0 +1,60 @@
+	<!-- Country based office selection -->
+    <script type="text/javascript">
+		$(document).ready(function(){
+		    
+		    $('#Country_Name').on('change',function(){
+		        var Country_Name = $(this).val();
+		        if(Country_Name!=""){
+		            $.ajax({
+		                type:'POST',
+		                url:'ajax/office_ajaxData.php',
+		                data:'Country_Name='+Country_Name,
+		                success:function(html){
+		                    $('#Office_Name').html(html);
+		                    $('#CS_Executive_Id').html('<option value="">Select office first</option>');
+		                    $('#Team_Name').html('<option value="">Select CS Executive first</option>');
+		                }
+		            }); 
+		        }else{
+		            $('#Office_Name').html('<option value="">Select country first</option>');
+		            $('#CS_Executive_Id').html('<option value="">Select office first</option>');
+		            $('#Team_Name').html('<option value="">Select CS Executive first</option>');
+		        }
+		    });
+
+		    $('#Office_Name').on('change',function(){
+		        var Office_Name = $(this).val();
+		        if(Office_Name!=""){
+		            $.ajax({
+		                type:'POST',
+		                url:'ajax/office_ajaxData.php',
+		                data:'Office_Name='+Office_Name,
+		                success:function(html){
+		                    $('#CS_Executive_Id').html(html);
+		                    $('#Team_Name').html('<option value="">Select CS Executive first</option>');
+		                }
+		            }); 
+		        }else{
+		            $('#CS_Executive_Id').html('<option value="">Select office first</option>');
+		            $('#Team_Name').html('<option value="">Select CS Executive first</option>');
+		        }
+		    });
+
+		    $('#CS_Executive_Id').on('change',function(){
+		        var CS_Executive_Id = $(this).val();
+		        if(CS_Executive_Id!=""){
+		            $.ajax({
+		                type:'POST',
+		                url:'ajax/office_ajaxData.php',
+		                data:'CS_Executive_Id='+CS_Executive_Id,
+		                success:function(html){
+		                    $('#Team_Name').html(html);
+		                }
+		            }); 
+		        }else{
+		            $('#Team_Name').html('<option value="">Select CS Executive first</option>');
+		        }
+		    });	
+
+		});
+    </script>

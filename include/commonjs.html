@@ -1,0 +1,77 @@
+
+	<script src="js/lib/jquery/jquery.min.js"></script>
+	<script src="js/lib/tether/tether.min.js"></script>
+	<script src="js/lib/bootstrap/bootstrap.min.js"></script>
+	<script src="js/plugins.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/validation.js"></script>	
+	<script src="js/lib/typeahead/jquery.typeahead.min.js"></script>
+
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			
+	     	var employee = [<?php 
+                $result=$conn->query("SELECT * FROM employee_master");
+            	$rowCount = $result->num_rows;
+                if($rowCount > 0){
+                    while($row = $result->fetch_assoc()){ 
+	                echo  '"'.$row['Employee_Id']. ' - ' . $row['Employee_Name'].'",';
+                    }
+                }
+	        ?>];
+			 $.typeahead({
+		        input: "#Employee_Id_s",
+		        order: "asc",
+		        minLength: 1,
+		        source: {
+		            data: employee
+		        }
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			
+	     	var clients = [<?php 
+                $result=$conn->query("SELECT * FROM client_master");
+            	$rowCount = $result->num_rows;
+                if($rowCount > 0){
+                    while($row = $result->fetch_assoc()){ 
+	                echo  '"'.$row['Client_Name']. '",';
+                    }
+                }
+	        ?>];
+			 $.typeahead({
+		        input: "#Client_Name_s",
+		        order: "asc",
+		        minLength: 1,
+		        source: {
+		            data: clients
+		        }
+			});
+		});
+	</script>
+
+	<script>
+		$(document).ready(function()
+		{
+			// $('#blockui-block-element-default').attr('disabled','disabled');
+		    $('#Proposal_Id_s').focus(function(){
+				$('#Proposal_Id_s').blur(function(){	
+				    var letters = /^\w{3}\d{5}$/;			
+					if(document.forms["myForm1"]["Proposal_Id_s"].value != '' && document.forms["myForm1"]["Proposal_Id_s"].value.match(letters) && 
+							document.forms["myForm1"]["Proposal_Id_s"].value.length ==8){
+    					document.getElementById("Proposal_Id_s").className = "form-control form-control-success";
+    					$('#Submit').removeAttr('disabled');
+					}
+					else
+					{
+						document.getElementById("Proposal_Id_s").className = "form-control form-control-danger";	
+						$('#Submit').attr('disabled','disabled');
+					}
+				});
+			});				
+		});
+	</script>		 
